@@ -1,5 +1,26 @@
 # thingsboard-widget
 
+## nodejs rpc remote shell
+
+特性：
+* 这是一个用node程序模拟的mqtt设备，定时发送内存/CPU使用率
+* 完全适配thingsboard内部部件"Contronl widgets>RPC remote shell"
+* 可以看作thingsboard版本的ssh
+
+1. 启动shell-device
+```
+cd node-device
+npm install
+
+# 修改配置文件 config/index.js：mqtt broker, token
+nano config/index.js
+	
+npm run shell-device
+```
+
+2. 在thingsboard看板添加RPC remote shell部件，绑定的设备和第一步配置的设备相同
+
+
 ## 部件之间通讯交互示例：send_message.json/receive_message.json
 这里使用的TB版本是3.3.3，发送消息：
 ```js
