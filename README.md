@@ -3,7 +3,7 @@
 ## nodejs rpc remote shell
 
 特性：
-* 这是一个用node程序模拟的mqtt设备，定时发送内存/CPU使用率
+* 这是一个用node程序模拟的mqtt设备，定时发送内存/CPU使用率，接收shell命令
 * 完全适配thingsboard内部部件"Contronl widgets>RPC remote shell"
 * 可以看作thingsboard版本的ssh
 
