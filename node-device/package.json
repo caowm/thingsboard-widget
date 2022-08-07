@@ -1,0 +1,20 @@
+{
+  "name": "node-things-device",
+  "version": "1.0.0",
+  "description": "Simulate thingsboard device through node program",
+  "main": "app.js",
+  "scripts": {
+    "shell-device": "node src/shell-device.js"
+  },
+  "keywords": [
+    "iot",
+    "thingsboard"
+  ],
+  "author": "remobjects@qq.com",
+  "license": "MIT",
+  "dependencies": {
+    "mqtt": "^4.2.8",
+    "shelljs": "^0.8.5"
+  },
+  "devDependencies": {}
+}
