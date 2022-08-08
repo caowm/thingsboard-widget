@@ -25,28 +25,32 @@ function onMessage(topic, message) {
         if (msg.params && msg.params.command && msg.params.command.startsWith('cwd ')) {
             shell.env.cwd = msg.params.command.substring(4);
             commandStatus.push({
-                exitCode: 0,
                 stdout: shell.env.cwd,
-                stderr: ""
             });
         } else {
             const child = shell.exec(msg.params.command, {
-                async: false,
+                async: true,
                 silent: true,
                 cwd: shell.env.cwd
-            }, (code, stdout, stderr) => {
-                // console.log('exec result: ', {stdout, stderr, code});
+            });
+            childProcesses.push(child);
+            child.stdout.on('data', function(data) {
+                commandStatus.push({
+                    stdout: data,
+                });
+            });
+            child.stderr.on('data', function(data) {
+                commandStatus.push({
+                    stderr: data,
+                });
+            });
+            child.on('exit', (code) => {
+                console.log(`Child ${child.pid} with commands: ${msg.params.command} \n  exited with code ${code}`);
                 commandStatus.push({
                     exitCode: code,
-                    stdout: stdout,
-                    stderr: stderr
                 });
                 const index = childProcesses.indexOf(child);
                 if (index > -1) childProcesses.splice(index, 1);
-            });
-            childProcesses.push(child);
-            child.on('exit', (code) => {
-                console.log(`Child ${child.pid} with commands: ${msg.params.command} \n  exited with code ${code}`);
             });
         }
         mqtt_client.rpc_response(topic, {ok: true})
